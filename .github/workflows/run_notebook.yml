@@ -1,0 +1,35 @@
+name: Run Notebook Daily
+
+on:
+  schedule:
+    - cron: '0 5 * * *'  # This schedule runs the workflow daily at 5:00 AM UTC, which is midnight EST
+
+jobs:
+  run_notebook:
+    name: Run Jupyter Notebook
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set Up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11.3
+
+      - name: Install Dependencies
+        run: |
+          pip install -r requirements.txt  # If you have any other requirements for the notebook
+          pip install openai pandas requests
+
+      - name: Run Jupyter Notebook
+        run: |
+          jupyter nbconvert --execute vj_gpt_dev.ipynb
+
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git commit -am "Auto-updated notebook execution results" || echo "No changes to commit"
+          git push
