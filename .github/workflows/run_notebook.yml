@@ -3,7 +3,8 @@ name: Run Notebook Daily
 on:
   schedule:
     - cron: '0 5 * * *'  # This schedule runs the workflow daily at 5:00 AM UTC, which is midnight EST
-
+  workflow_dispatch:
+  
 jobs:
   run_notebook:
     name: Run Jupyter Notebook
