@@ -21,7 +21,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install openai pandas requests
+          pip install openai pandas requests jupyter
 
       - name: Run Jupyter Notebook
         run: |
